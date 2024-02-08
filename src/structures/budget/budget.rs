@@ -1,5 +1,7 @@
 use std::collections::HashMap;
+use chrono::{DateTime, Local};
 use crate::structures::costs::Costs;
+use crate::utils;
 
 
 pub struct Budget {
@@ -14,26 +16,35 @@ impl Budget {
     }
 
     pub fn add_costs(&mut self, name: String, amount: f32, comments: Option<String>) {
-        let costs = Costs::new(amount, comments);
+        let current_time: DateTime<Local> = Local::now();
+        let timestamp = current_time.format("%Y-%m-%d %H:%M:%S").to_string();
+
+        let costs = Costs::new(amount, comments, timestamp);
         self.budget
             .entry(name)
             .or_insert(Vec::new())
             .push(costs);
+
+        for (_, vec) in self.budget.iter_mut() {
+            vec.sort_by(|a, b| b.timestamp.cmp(&a.timestamp));
+        }
     }
 
     pub fn get_all_costs_by_name(&self, name: String) {
         match self.budget.get(&name) {
             Some(costs) => {
                 println!("\nAll entries for {}:", name);
-                for Costs { amount, comments } in costs {
+
+                for Costs { amount, comments, timestamp } in costs {
                     println!("\nAmount: {}", amount);
                     if let Some(comment) = comments {
-                        println!("Comment: {}", comment)
+                        println!("Comment: {}", comment.trim());
                     }
+                    println!("Time: {}", timestamp);
                 }
             }
             None => {
-                println!("No entries found for {}", name);
+                utils::warning(&format!("\nNo entries found for {}", name));
             }
         };
     }

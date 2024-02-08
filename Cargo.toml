@@ -4,3 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+anyhow = "1.0.79"
+termcolor = "1.4.1"
+chrono = "0.4.33"

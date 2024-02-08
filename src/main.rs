@@ -2,10 +2,13 @@ mod structures;
 mod utils;
 
 use structures::budget::Budget;
-use std::io::{self, Write};
+use structures::text_style::TextStyle;
+use std::io;
+use termcolor::{Color};
 
 fn main() {
     let mut budget = Budget::new();
+
 
     loop {
         println!("\nChoose an option:");
@@ -24,7 +27,7 @@ fn main() {
         let choice: i32 = match choice.trim().parse() {
             Ok(x) => x,
             Err(_) => {
-                println!("Error parsing");
+                utils::error("Wrong value, please tyr another");
                 continue;
             }
         };
@@ -39,7 +42,7 @@ fn main() {
                 let amount: f32 = match amount.trim().parse() {
                     Ok(x) => x,
                     Err(_) => {
-                        println!("Invalid input! Please enter a valid amount.");
+                        utils::error("Invalid input! Please enter a valid amount.");
                         continue;
                     }
                 };
@@ -58,7 +61,7 @@ fn main() {
                 let total_costs = budget.get_total_amount_of_all_costs();
 
                 if total_costs.is_empty() {
-                    println!("Nothing in our budget");
+                    utils::warning("\nNothing in our budget");
                     continue;
                 }
 
@@ -70,7 +73,7 @@ fn main() {
                 let all_names = budget.get_all_costs_names();
 
                 if all_names.is_empty() {
-                    println!("Nothing in our budget");
+                    utils::warning("\nNothing in our budget");
                     continue;
                 }
 
@@ -79,7 +82,7 @@ fn main() {
                 }
             }
             5 => {
-                println!("Exiting...");
+                println!("\nExiting...");
                 break;
             }
             _ => {}
