@@ -1,6 +1,8 @@
 use std::collections::HashMap;
 use chrono::{DateTime, Local};
+use termcolor::Color;
 use crate::structures::costs::Costs;
+use crate::structures::text_style::TextStyle;
 use crate::utils;
 
 
@@ -33,14 +35,21 @@ impl Budget {
     pub fn get_all_costs_by_name(&self, name: String) {
         match self.budget.get(&name) {
             Some(costs) => {
-                println!("\nAll entries for {}:", name);
+                let text_color = TextStyle::new()
+                    .color(Color::Green)
+                    .bold()
+                    .underline();
+
+                text_color.set_styles_for_text(&format!("\nAll entries for {}:", name));
 
                 for Costs { amount, comments, timestamp } in costs {
-                    println!("\nAmount: {}", amount);
+                    self.styles_for_all_costs_by_name(&format!("\nAmount: {}\n", amount));
+
                     if let Some(comment) = comments {
-                        println!("Comment: {}", comment.trim());
+                        self.styles_for_all_costs_by_name(&format!("Comment: {}\n", comment.trim()));
                     }
-                    println!("Time: {}", timestamp);
+
+                    self.styles_for_all_costs_by_name(&format!("Time: {}\n", timestamp));
                 }
             }
             None => {
@@ -59,5 +68,13 @@ impl Budget {
     }
     pub fn get_all_costs_names(&self) -> Vec<&String> {
         self.budget.keys().collect()
+    }
+
+    fn styles_for_all_costs_by_name(&self, text: &str) {
+        let text_color = TextStyle::new()
+            .color(Color::Blue)
+            .italic();
+
+        text_color.set_styles_for_text(text);
     }
 }

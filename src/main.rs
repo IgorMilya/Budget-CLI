@@ -66,7 +66,11 @@ fn main() {
                 }
 
                 for (name, total) in total_costs {
-                    println!("\nName: {},\nTotal: {}", name, total);
+                    let text_color = TextStyle::new()
+                        .color(Color::Cyan)
+                        .italic();
+
+                    text_color.set_styles_for_text(&format!("\nName: {},\nTotal: {}\n", name, total));
                 }
             }
             4 => {
@@ -78,7 +82,12 @@ fn main() {
                 }
 
                 for name in all_names {
-                    println!("{}", name);
+                    let text_color = TextStyle::new()
+                        .color(Color::Green)
+                        .bold()
+                        .underline();
+
+                    text_color.set_styles_for_text(&format!("{}\n", name));
                 }
             }
             5 => {
