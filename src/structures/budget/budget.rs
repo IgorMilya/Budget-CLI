@@ -35,7 +35,7 @@ impl Budget {
     pub fn get_all_costs_by_name(&self, name: String) {
         match self.budget.get(&name) {
             Some(costs) => {
-                let text_color = TextStyle::new()
+                let text_color = TextStyle::default()
                     .color(Color::Green)
                     .bold()
                     .underline();
@@ -71,7 +71,7 @@ impl Budget {
     }
 
     fn styles_for_all_costs_by_name(&self, text: &str) {
-        let text_color = TextStyle::new()
+        let text_color = TextStyle::default()
             .color(Color::Blue)
             .italic();
 

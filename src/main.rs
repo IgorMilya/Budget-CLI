@@ -66,7 +66,7 @@ fn main() {
                 }
 
                 for (name, total) in total_costs {
-                    let text_color = TextStyle::new()
+                    let text_color = TextStyle::default()
                         .color(Color::Cyan)
                         .italic();
 
@@ -82,7 +82,7 @@ fn main() {
                 }
 
                 for name in all_names {
-                    let text_color = TextStyle::new()
+                    let text_color = TextStyle::default()
                         .color(Color::Green)
                         .bold()
                         .underline();

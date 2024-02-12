@@ -5,7 +5,7 @@ use crate::structures::text_style::TextStyle;
 
 pub fn enter_value(comment: &str, error: &str) -> String {
 
-    let text_color = TextStyle::new()
+    let text_color = TextStyle::default()
         .color(Color::Magenta)
         .underline();
 

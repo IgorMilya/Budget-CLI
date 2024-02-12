@@ -9,8 +9,8 @@ pub struct TextStyle {
     pub bg: Option<Color>,
 }
 
-impl TextStyle {
-    pub fn new() -> Self {
+impl Default for TextStyle {
+    fn default() -> Self {
         Self {
             color: None,
             bold: false,
@@ -19,6 +19,9 @@ impl TextStyle {
             bg: None,
         }
     }
+}
+
+impl TextStyle {
     pub fn color(mut self, color: Color) -> Self {
         self.color = Some(color);
         self
